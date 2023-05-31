@@ -24,7 +24,13 @@ function App() {
    )
 
    const [contentButton, setContentButton] = useState('')
-   const [disabledForm, setDisabledForm] = useState(false)
+   const [disabledForm, setDisabledForm] = useState(null)
+   const [user, setUser] = useState({
+      email: '',
+      name: '',
+      image: '', 
+      password: ''
+   })
 
    return (
       <AnimatePresence>
@@ -35,7 +41,9 @@ function App() {
                setContentButton,
                disabledForm,
                setDisabledForm,
-               logo
+               logo,
+               user,
+               setUser
             }}
          >
             <Routes location={useLocation()} key={useLocation().pathname}>

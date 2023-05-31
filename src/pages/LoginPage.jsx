@@ -6,11 +6,13 @@ import { motion } from 'framer-motion'
 
 export default function Login() {
    const navigate = useNavigate()
+
    const { animationForm, contentButton, setContentButton, disabledForm, setDisabledForm, logo } =
       useContext(AppContext)
 
    useEffect(() => {
       setContentButton('Entrar')
+      setDisabledForm(false)
    }, [])
 
    return (
@@ -20,17 +22,18 @@ export default function Login() {
             <FormLogin
                onSubmit={() => {
                   event.preventDefault()
+
                   setContentButton(animationForm)
                   setDisabledForm(true)
                }}
             >
-               <Input type="email" placeholder="email" disabled={disabledForm} required />
-               <Input type="password" placeholder="senha" disabled={disabledForm} required />
-               <InputButton type="submit" disabled={disabledForm} required>
+               <Input type="email" placeholder="email" disabled={disabledForm} /* required */ />
+               <Input type="password" placeholder="senha" disabled={disabledForm} /* required */ />
+               <InputButton type="submit" disabled={disabledForm} /* required */>
                   {contentButton}
                </InputButton>
             </FormLogin>
-            <RegisterLink disabled={disabledForm} onClick={() => navigate('/cadastro')}>
+            <RegisterLink onClick={() => navigate('/cadastro')}>
                Não tem uma conta? Cadastre-se
             </RegisterLink>
          </Container>

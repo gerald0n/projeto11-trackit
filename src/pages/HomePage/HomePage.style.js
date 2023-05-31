@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const ContainerApp = styled.div`
    height: 100vh;
@@ -38,7 +38,7 @@ export const Container = styled.div`
    p {
       font-size: 1.8rem;
       line-height: 22px;
-
+      padding-top: 0.8rem;
       color: #666666;
    }
 `
@@ -51,7 +51,7 @@ export const Header = styled.div`
    align-items: center;
    justify-content: space-between;
 
-   margin-bottom: 2.8rem;
+   margin-bottom: 2rem;
 
    button {
       width: 40px;
@@ -98,4 +98,57 @@ export const ImageProfile = styled.img`
    width: 5.1rem;
    height: 5.1rem;
    border-radius: 100%;
+`
+
+export const Collapse = styled.div`
+   width: 340px;
+   height: 180px;
+   background: #ffffff;
+   border-radius: 5px;
+   padding: 1.9rem;
+   margin-bottom: 1rem;
+      display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+`
+export const ContainerButtons = styled.div`
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 2.3rem;
+
+   a {
+      font-size: 1.6rem;
+      color: #52b6ff;
+   }
+`
+
+export const ContainerDays = styled.div`
+   display: flex;
+   gap: 0.4rem;
+`
+
+export const Day = styled.div`
+   width: 30px;
+   height: 30px;
+   ${({ select }) => {
+      return select
+         ? css`
+              background: #cfcfcf;
+              border: 1px solid #cfcfcf;
+              color: #FFFFFF;
+           `
+         : css`
+              background: #ffffff;
+              border: 1px solid #d5d5d5;
+              color: #dbdbdb;
+           `
+   }}
+   border-radius: 5px;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   font-size: 19.976px;
 `

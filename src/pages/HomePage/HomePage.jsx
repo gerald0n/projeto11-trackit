@@ -1,15 +1,28 @@
-import { useContext, useEffect } from 'react'
+import { css } from 'styled-components'
+import { useContext, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App, { AppContext } from '../../App'
 import { successNotification } from '../../services/notifications'
+import { InputButton } from '../../styles/Form.style'
 import { ToastContainer } from 'react-toastify'
-import {ContainerApp, Navbar, ImageProfile, Container, Header, Footer} from './HomePage.style'
 import {
-   CircularProgressbar,
-   CircularProgressbarWithChildren,
-   buildStyles
-} from 'react-circular-progressbar'
+   ContainerApp,
+   Navbar,
+   ImageProfile,
+   Container,
+   Header,
+   Footer,
+   Collapse,
+   ContainerButtons,
+   ContainerDays,
+   Day
+} from './HomePage.style'
+
+import { Input } from '../../styles/Form.style'
+
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
+import styled from 'styled-components'
 
 export default function HomePage() {
    /* const { user } = useContext(AppContext) */
@@ -19,6 +32,22 @@ export default function HomePage() {
       image: 'https://lh3.googleusercontent.com/a/AAcHTtc1MJXwwjf3alyo7NIMUEY15WKrJewyHv4rqGnpqA=s288-c-no',
       password: '1921'
    }
+
+   const [selectDay, setSelectDay] = useState([
+      { value: 'D', isSelected: false },
+      { value: 'S', isSelected: false },
+      { value: 'T', isSelected: false },
+      { value: 'Q', isSelected: false },
+      { value: 'Q', isSelected: false },
+      { value: 'S', isSelected: false },
+      { value: 'S', isSelected: false }
+   ])
+
+   const [post, setPost] = useState({
+      name: '',
+      days: ''
+   })
+
    const habits = [
       /* {
       id: 1,
@@ -28,11 +57,11 @@ export default function HomePage() {
    ]
 
    useEffect(() => {
-      /* successNotification(`Seja bem-vindo, ${user.name}`) */
-      {
-         /* <ToastContainer style={{ fontSize: '16px' }} /> */
-      }
+      successNotification(`Seja bem-vindo, ${user.name}`)
    }, [])
+   useEffect(() => {
+      console.log(post)
+   }, [post])
 
    return (
       <ContainerApp>
@@ -46,6 +75,43 @@ export default function HomePage() {
                   Meus hábitos
                   <button>+</button>
                </Header>
+               <Collapse>
+                  <Input
+                     type="text"
+                     context="homepage"
+                     placeholder="nome do hábito"
+                     value={post.name}
+                     onChange={(e) => {
+                        setPost({ ...post, name: e.target.value })
+                     }}
+                  />
+                  <ContainerDays>
+                     {selectDay.map((day, index) => {
+                        return (
+                           <Day
+                              onClick={() => {
+                                 day.isSelected = !day.isSelected
+                                 const aux = [...selectDay]
+                                 setSelectDay(aux)
+                                 setPost({
+                                    ...post,
+                                    days: selectDay.filter((day) => day.isSelected === true)
+                                 })
+                              }}
+                              key={index}
+                              select={day.isSelected}
+                           >
+                              {day.value}
+                           </Day>
+                        )
+                     })}
+                  </ContainerDays>
+                  <ToastContainer style={{ fontSize: '16px', marginTop: '5rem' }} />
+                  <ContainerButtons>
+                     <a>Cancelar</a>
+                     <InputButton length="secondary">Salvar</InputButton>
+                  </ContainerButtons>
+               </Collapse>
                <p>
                   Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a
                   trackear!
@@ -75,4 +141,3 @@ export default function HomePage() {
       </ContainerApp>
    )
 }
-

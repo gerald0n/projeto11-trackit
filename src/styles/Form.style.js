@@ -48,7 +48,9 @@ export const Input = styled.input`
    height: 4.5rem;
 
    background-color: #ffffff;
-   color: #000000;
+   color: ${({context}) => {
+      return (context === 'homepage') ? '#666666' : '#000000'
+   }};
    text-align: left;
 
    border: 1px solid #d5d5d5;
@@ -77,13 +79,17 @@ export const InputButton = styled.button`
    background-color: #52b6ff;
    color: #ffffff;
 
-   width: 30rem;
+   width: ${({length}) => {
+      return (length === 'secondary') ? '8.4rem' : '30rem' 
+   }};
    height: 4.5rem;
    border: 1px solid #d5d5d5;
    border-radius: 5px;
    padding-inline: 1.1rem;
 
-   font-size: 2rem;
+   font-size: ${({length}) => {
+      return (length === 'secondary') ? '1.8rem' : '2rem' 
+   }};;
    line-height: 2.6rem;
    cursor: pointer;
 

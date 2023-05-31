@@ -7,7 +7,8 @@ export const errorNotification = (str) =>
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
       draggable: true,
       progress: undefined,
       theme: 'colored'
@@ -17,11 +18,10 @@ export const successNotification = (str) =>
       position: 'top-right',
       autoClose: 2000,
       hideProgressBar: false,
+      pauseOnFocusLoss: false,
       closeOnClick: true,
-      pauseOnHover: true,
+      pauseOnHover: false,
       draggable: true,
       progress: undefined,
       theme: 'colored'
    })
-
-

@@ -1,5 +1,5 @@
 import LoginPage from './pages/LoginPage'
-import HomePage from './pages/HomePage'
+import HomePage from './pages/HomePage/HomePage'
 import RegisterPage from './pages/RegisterPage'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useState, createContext } from 'react'

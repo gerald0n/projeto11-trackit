@@ -1,6 +1,6 @@
 import { Container, Image, FormLogin, Input, InputButton, RegisterLink } from '../styles/Form.style'
 import { useContext, useEffect } from 'react'
-import { AppContext } from './../App'
+import App, { AppContext } from './../App'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { motion } from 'framer-motion'
@@ -23,10 +23,34 @@ export default function Login() {
       setContentButton('Entrar')
       setDisabledForm(false)
       setUser({ email: '', name: '', image: '', password: '' })
+
+      if (localStorage.length > 0) {
+         let local = localStorage.getItem('user')
+         local = JSON.parse(local)
+         setUser(local)
+      }
    }, [])
 
    const navigate = useNavigate()
    const { email, password } = user
+
+   function login() {
+      event.preventDefault()
+      setContentButton(animationForm)
+      setDisabledForm(true)
+
+      signIn(email, password)
+         .then((response) => {
+            setUser(response.data)
+            localStorage.setItem('user', JSON.stringify(response.data))
+            navigate('/habitos')
+         })
+         .catch((error) => {
+            errorNotification(error.response.data.message)
+            setDisabledForm(false)
+            setContentButton('Cadastrar')
+         })
+   }
 
    return (
       <motion.div
@@ -37,25 +61,7 @@ export default function Login() {
       >
          <Container>
             <Image src={logo} alt="logo trackIt" />
-            <FormLogin
-               onSubmit={() => {
-                  event.preventDefault()
-
-                  setContentButton(animationForm)
-                  setDisabledForm(true)
-
-                  const data = signIn(user.email, user.password)
-                  data.then((response) => {
-                     setUser(response.data)
-                     navigate('/habitos')
-                  })
-                  data.catch((error) => {
-                     errorNotification(error.response.data.message)
-                     setDisabledForm(false)
-                     setContentButton('Cadastrar')
-                  })
-               }}
-            >
+            <FormLogin onSubmit={login}>
                <ToastContainer style={{ fontSize: '16px' }} />
                <Input
                   type="email"
@@ -73,7 +79,7 @@ export default function Login() {
                   onChange={(e) => setUser({ ...user, password: e.target.value })}
                   required
                />
-               <InputButton type="submit" disabled={disabledForm} /* required */>
+               <InputButton type="submit" disabled={disabledForm} required>
                   {contentButton}
                </InputButton>
             </FormLogin>

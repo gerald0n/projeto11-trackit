@@ -1,7 +1,6 @@
-import { css } from 'styled-components'
 import { useContext, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import App, { AppContext } from '../../App'
+import { AppContext } from '../../App'
 import { successNotification } from '../../services/notifications'
 import { InputButton } from '../../styles/Form.style'
 import { ToastContainer } from 'react-toastify'
@@ -12,7 +11,7 @@ import {
    Container,
    Header,
    Footer,
-   Collapse,
+   CollapseForm,
    ContainerButtons,
    ContainerDays,
    Day
@@ -22,16 +21,10 @@ import { Input } from '../../styles/Form.style'
 
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-import styled from 'styled-components'
 
 export default function HomePage() {
-   /* const { user } = useContext(AppContext) */
-   const user = {
-      email: 'contato.gneto@gmail.com',
-      name: 'Geraldo Gomes',
-      image: 'https://lh3.googleusercontent.com/a/AAcHTtc1MJXwwjf3alyo7NIMUEY15WKrJewyHv4rqGnpqA=s288-c-no',
-      password: '1921'
-   }
+   const { user } = useContext(AppContext)
+   console.log(user)
 
    const [selectDay, setSelectDay] = useState([
       { value: 'D', isSelected: false },
@@ -57,10 +50,21 @@ export default function HomePage() {
    ]
 
    useEffect(() => {
-      successNotification(`Seja bem-vindo, ${user.name}`)
+      successNotification(`Seja bem-vindo, ${user.name}!`)
    }, [])
+
    useEffect(() => {
-      console.log(post)
+      if (post.days.length > 0) {
+         const arrIndex = []
+         post.days.forEach((day) => {
+            for (const index in selectDay) {
+               if (day === selectDay[index]) {
+                  arrIndex.push(index)
+                  setPost({ ...post, days: arrIndex })
+               }
+            }
+         })
+      }
    }, [post])
 
    return (
@@ -75,8 +79,14 @@ export default function HomePage() {
                   Meus hábitos
                   <button>+</button>
                </Header>
-               <Collapse>
+               <CollapseForm
+                  onSubmit={() => {
+                     event.preventDefault()
+                     console.log(post)
+                  }}
+               >
                   <Input
+                     required
                      type="text"
                      context="homepage"
                      placeholder="nome do hábito"
@@ -106,12 +116,13 @@ export default function HomePage() {
                         )
                      })}
                   </ContainerDays>
+
                   <ToastContainer style={{ fontSize: '16px', marginTop: '5rem' }} />
                   <ContainerButtons>
                      <a>Cancelar</a>
                      <InputButton length="secondary">Salvar</InputButton>
                   </ContainerButtons>
-               </Collapse>
+               </CollapseForm>
                <p>
                   Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a
                   trackear!

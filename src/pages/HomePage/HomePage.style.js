@@ -100,7 +100,7 @@ export const ImageProfile = styled.img`
    border-radius: 100%;
 `
 
-export const Collapse = styled.div`
+export const CollapseForm = styled.form`
    width: 340px;
    height: 180px;
    background: #ffffff;

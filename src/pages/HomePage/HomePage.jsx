@@ -13,14 +13,17 @@ import {
    ContainerDays,
    Day,
    InputCancel,
-   ContainerHabits
+   ContainerHabits,
+   Dday,
+   ContainerDday,
+   Habits
 } from './HomePage.style'
 import { Input } from '../../styles/Form.style'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { AppContext } from '../../App'
 import { alertNotification } from '../../services/notifications'
-import { postHabit, getHabit } from '../../services/api'
+import { postHabit, getHabit, deleteHabit } from '../../services/api'
 import lixeira from '../../assets/lixeira.png'
 
 export default function HomePage() {
@@ -34,9 +37,17 @@ export default function HomePage() {
       { value: 'S', isSelected: false }
    ]
 
-
    const [habits, setHabits] = useState([])
-   const { user, setUser } = useContext(AppContext)
+   const {
+      animationForm,
+      contentButton,
+      setContentButton,
+      disabledForm,
+      setDisabledForm,
+      user,
+      setUser
+   } = useContext(AppContext)
+
    const [selectDay, setSelectDay] = useState(selectDayReset)
    const [collapseVisible, setCollapseVisible] = useState(false)
    const [post, setPost] = useState({
@@ -45,6 +56,8 @@ export default function HomePage() {
    })
 
    useEffect(() => {
+      setContentButton('Salvar')
+      setDisabledForm(false)
       if (localStorage.length > 0) {
          let local = localStorage.getItem('user')
          local = JSON.parse(local)
@@ -97,17 +110,21 @@ export default function HomePage() {
                   if (post.days.length === 0) {
                      alertNotification('Selecione, no mínimo, 01 dia.')
                   } else {
+                     setContentButton(animationForm)
+                     setDisabledForm(true)
                      postHabit(post, user.token)
-                        .then((response) => {
+                        .then(() => {
                            setPost({ name: '', days: [] })
                            setSelectDay(selectDayReset)
+                           setCollapseVisible(!collapseVisible)
                            /*  */
                            getHabit(user.token)
                               .then((response) => {
-                                 console.log(response.data)
                                  setHabits(response.data)
+                                 setContentButton('Salvar')
+                                 setDisabledForm(false)
                               })
-                              .catch((error) => console.log(error.response))
+                              .catch((error) => alert(error.response))
                         })
                         .catch((error) => console.log(error.response))
                   }
@@ -119,6 +136,7 @@ export default function HomePage() {
                   context="homepage"
                   placeholder="nome do hábito"
                   value={post.name}
+                  disabled={disabledForm}
                   onChange={(e) => {
                      setPost({ ...post, name: e.target.value })
                   }}
@@ -127,6 +145,7 @@ export default function HomePage() {
                   {selectDay.map((day, index) => {
                      return (
                         <Day
+                           disabled={disabledForm}
                            onClick={() => {
                               event.preventDefault()
                               day.isSelected = !day.isSelected
@@ -149,6 +168,7 @@ export default function HomePage() {
                <ToastContainer style={{ fontSize: '16px' }} />
                <ContainerButtons>
                   <InputCancel
+                     disabled={disabledForm}
                      onClick={() => {
                         event.preventDefault()
                         setCollapseVisible(!collapseVisible)
@@ -156,7 +176,9 @@ export default function HomePage() {
                   >
                      Cancelar
                   </InputCancel>
-                  <InputButton length="secondary">Salvar</InputButton>
+                  <InputButton disabled={disabledForm} length="secondary">
+                     {contentButton}
+                  </InputButton>
                </ContainerButtons>
             </CollapseForm>
             {habits.length === 0 ? (
@@ -165,21 +187,47 @@ export default function HomePage() {
                   trackear!
                </p>
             ) : (
-               console.log(habits)
-               
-               /*                teste.map(habit => {
-                  return <ContainerHabits key={habit.id}>
-                     <section>
-                        <p>{habit.name}</p>
-                        <img src={lixeira} alt="" />
-                     </section>
-                     <div>
-                     {selectDayReset.map((day, index) => {
-                        return <span key={index}>{day.value}</span>
-                     })}
-                     </div>
-                  </ContainerHabits>
-               }) */
+               <Habits>
+                  {habits.map((habit) => {
+                     return (
+                        <ContainerHabits key={habit.id}>
+                           <section>
+                              <p>{habit.name}</p>
+                              <img
+                                 onClick={() => {
+                                    if (confirm('Deseja apaga este hábito?')) {
+                                       deleteHabit(habit.id, user.token).then(() => {
+                                          getHabit(user.token)
+                                             .then((response) => {
+                                                setHabits(response.data)
+                                             })
+                                             .catch((error) => console.log(error.response))
+                                             .catch((error) => console.log(error.response))
+                                       })
+                                    }
+                                 }}
+                                 src={lixeira}
+                                 alt=""
+                              />
+                           </section>
+                           <ContainerDday>
+                              {selectDayReset.map((day, index) => {
+                                 return (
+                                    <Dday
+                                       select={
+                                          habit.days.includes(index) ? 'selected' : 'deselected'
+                                       }
+                                       key={index}
+                                    >
+                                       {day.value}
+                                    </Dday>
+                                 )
+                              })}
+                           </ContainerDday>
+                        </ContainerHabits>
+                     )
+                  })}
+               </Habits>
             )}
          </Container>
 

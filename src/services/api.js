@@ -32,5 +32,11 @@ export const getHabit = (token) => {
    return data
 }
 
+export const deleteHabit = (id, token) => {
+   const data = axios.delete(DEFAULT_URL.concat(`${HABIT}/${id}`), {headers: {'Authorization': `Bearer ${token}`}})
+
+   return data
+}
+
 /* export const movies = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
 .then(response => response.data) */

@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
 body, #root {
 	height: 100vh;
+	background: #f2f2f2;
 }
 
     html, body, div, span, applet, object, iframe,

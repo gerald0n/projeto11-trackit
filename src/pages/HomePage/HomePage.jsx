@@ -1,7 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { AppContext } from '../../App'
-import { successNotification } from '../../services/notifications'
 import { InputButton } from '../../styles/Form.style'
 import { ToastContainer } from 'react-toastify'
 import {
@@ -16,17 +13,15 @@ import {
    ContainerDays,
    Day
 } from './HomePage.style'
-
 import { Input } from '../../styles/Form.style'
-
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
+import { AppContext } from '../../App'
+import { alertNotification } from '../../services/notifications'
+import { postHabit } from '../../services/api'
 
 export default function HomePage() {
-   const { user } = useContext(AppContext)
-   console.log(user)
-
-   const [selectDay, setSelectDay] = useState([
+   const selectDayReset = [
       { value: 'D', isSelected: false },
       { value: 'S', isSelected: false },
       { value: 'T', isSelected: false },
@@ -34,23 +29,23 @@ export default function HomePage() {
       { value: 'Q', isSelected: false },
       { value: 'S', isSelected: false },
       { value: 'S', isSelected: false }
-   ])
+   ]
 
+   const { user, setUser } = useContext(AppContext)
+   const [selectDay, setSelectDay] = useState(selectDayReset)
+   const [collapseVisible, setCollapseVisible] = useState(false)
    const [post, setPost] = useState({
       name: '',
       days: ''
    })
-
-   const habits = [
-      /* {
-      id: 1,
-      name: 'Nome do hábito',
-      days: [1, 3, 5]
-   } */
-   ]
+   const habits = []
 
    useEffect(() => {
-      successNotification(`Seja bem-vindo, ${user.name}!`)
+      if (localStorage.length > 0) {
+         let local = localStorage.getItem('user')
+         local = JSON.parse(local)
+         setUser(local)
+      }
    }, [])
 
    useEffect(() => {
@@ -71,18 +66,35 @@ export default function HomePage() {
       <ContainerApp>
          <Navbar>
             <span>TrackIt</span>
-            <ImageProfile src={user.image} />
+            <ImageProfile
+               onClick={() => {
+                  window.location.reload()
+               }}
+               src={user.image}
+            />
          </Navbar>
+
          {habits.length === 0 ? (
             <Container>
                <Header>
                   Meus hábitos
-                  <button>+</button>
+                  <button onClick={() => setCollapseVisible(!collapseVisible)}>+</button>
                </Header>
                <CollapseForm
+                  collapse={collapseVisible}
                   onSubmit={() => {
                      event.preventDefault()
-                     console.log(post)
+                     if (post.days.length === 0) {
+                        alertNotification('Selecione, no mínimo, 01 dia.')
+                     } else {
+                        postHabit(post, user.token)
+                           .then((response) => {
+                              console.log(response.data)
+                              setPost({ name: '', days: [] })
+                              setSelectDay(selectDayReset)
+                           })
+                           .catch((error) => console.log(error.response))
+                     }
                   }}
                >
                   <Input
@@ -117,7 +129,7 @@ export default function HomePage() {
                      })}
                   </ContainerDays>
 
-                  <ToastContainer style={{ fontSize: '16px', marginTop: '5rem' }} />
+                  <ToastContainer style={{ fontSize: '16px' }} />
                   <ContainerButtons>
                      <a>Cancelar</a>
                      <InputButton length="secondary">Salvar</InputButton>

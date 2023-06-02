@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { motion } from 'framer-motion'
 import { signIn } from '../services/api'
-import { errorNotification } from '../services/notifications'
+import { errorNotification, successNotification } from '../services/notifications'
 
 export default function Login() {
    const {
@@ -27,7 +27,14 @@ export default function Login() {
       if (localStorage.length > 0) {
          let local = localStorage.getItem('user')
          local = JSON.parse(local)
-         setUser(local)
+
+         signIn(local.email, local.password).then((response) => {
+            setUser(response.data)
+            setContentButton(animationForm)
+            setDisabledForm(true)
+            successNotification(`Seja bem-vindo, ${local.name}!`)
+            setTimeout(() => navigate('/habitos'), 1000)
+         })
       }
    }, [])
 

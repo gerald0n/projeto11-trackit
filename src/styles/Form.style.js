@@ -44,7 +44,6 @@ export const RegisterLink = styled.a`
 `
 
 export const Input = styled.input`
-   width: 30rem;
    height: 4.5rem;
 
    background-color: #ffffff;

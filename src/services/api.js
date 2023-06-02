@@ -4,6 +4,7 @@ import axios from 'axios'
 /* const Auth = 'Bearer '.concat(USER_TOKEN) */
 const REGISTER = 'auth/sign-up'
 const LOGIN = 'auth/login'
+const CREATE_HABIT = 'habits'
 const DEFAULT_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/`
 
 export const signUp = (user) => {
@@ -16,6 +17,12 @@ export const signIn = (email, password) => {
       email: email,
       password: password
    })
+   return data
+}
+
+export const postHabit = (obj, token) => {
+   const data = axios.post(DEFAULT_URL.concat(CREATE_HABIT), obj, {headers: {'Authorization': `Bearer ${token}`}})
+
    return data
 }
 

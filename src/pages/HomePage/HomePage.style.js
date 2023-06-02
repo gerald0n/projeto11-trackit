@@ -101,13 +101,28 @@ export const ImageProfile = styled.img`
 `
 
 export const CollapseForm = styled.form`
-   width: 340px;
-   height: 180px;
+   ${({ collapse }) => {
+      return collapse
+         ? css`
+              height: 18rem;
+              padding: 1.9rem;
+              margin-bottom: 1rem;
+              transition: all 0.3s;
+              opacity: 0.9;
+           `
+         : css`
+              height: 0;
+              padding: 0;
+              margin-bottom: 0;
+              transition: all 0.3s;
+              opacity: 0.1;
+           `
+   }}
+   overflow: hidden;
    background: #ffffff;
    border-radius: 5px;
-   padding: 1.9rem;
-   margin-bottom: 1rem;
-      display: flex;
+
+   display: flex;
    flex-direction: column;
    justify-content: space-between;
 `
@@ -136,7 +151,7 @@ export const Day = styled.div`
          ? css`
               background: #cfcfcf;
               border: 1px solid #cfcfcf;
-              color: #FFFFFF;
+              color: #ffffff;
            `
          : css`
               background: #ffffff;

@@ -25,3 +25,16 @@ export const successNotification = (str) =>
       progress: undefined,
       theme: 'colored'
    })
+
+export const alertNotification = (str) => {
+   toast.warn(str, {
+      position: 'top-right',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored'
+   })
+}

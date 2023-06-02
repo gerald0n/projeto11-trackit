@@ -3,6 +3,14 @@ import styled, { css } from 'styled-components'
 export const ContainerApp = styled.div`
    height: 100vh;
    background: #f2f2f2;
+
+   p {
+      font-size: 1.8rem;
+      line-height: 22px;
+      padding-top: 0.8rem;
+      color: #666666;
+      padding-inline: 1.7rem;
+   }
 `
 
 export const Footer = styled.footer`
@@ -34,13 +42,6 @@ export const Footer = styled.footer`
 export const Container = styled.div`
    padding-top: 9.2rem;
    padding-inline: 1.7rem;
-
-   p {
-      font-size: 1.8rem;
-      line-height: 22px;
-      padding-top: 0.8rem;
-      color: #666666;
-   }
 `
 
 export const Header = styled.div`
@@ -143,7 +144,7 @@ export const ContainerDays = styled.div`
    gap: 0.4rem;
 `
 
-export const Day = styled.div`
+export const Day = styled.button`
    width: 30px;
    height: 30px;
    ${({ select }) => {
@@ -166,4 +167,39 @@ export const Day = styled.div`
    justify-content: center;
 
    font-size: 19.976px;
+`
+export const InputCancel = styled.button`
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 8.4rem;
+   height: 4.5rem;
+   font-size: 1.8rem;
+   color: #52b6ff;
+   border: none;
+   background: transparent;
+`
+export const ContainerHabits = styled.div`
+   background: #ffffff;
+   height: 9.1rem;
+   border-radius: 5px;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+
+   section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 2rem;
+      p {
+         padding: 0;
+         padding-top: 2rem;
+      }
+      img {
+         width: 1.3rem;
+         height: 1.5rem;
+      }
+   }
 `

@@ -87,9 +87,10 @@ export default function HomePage() {
 
    return (
       <ContainerApp>
-         <Navbar>
+         <Navbar data-test="header">
             <span>TrackIt</span>
             <ImageProfile
+               data-test="avatar"
                onClick={() => {
                   window.location.reload()
                }}
@@ -100,10 +101,11 @@ export default function HomePage() {
          <Container>
             <Header>
                Meus hábitos
-               <button onClick={() => setCollapseVisible(!collapseVisible)}>+</button>
+               <button data-test="habit-create-btn" onClick={() => setCollapseVisible(!collapseVisible)}>+</button>
             </Header>
 
             <CollapseForm
+               data-test="habit-create-container"
                collapse={collapseVisible}
                onSubmit={() => {
                   event.preventDefault()
@@ -132,6 +134,7 @@ export default function HomePage() {
             >
                <Input
                   required
+                  data-test="habit-name-input"
                   type="text"
                   context="homepage"
                   placeholder="nome do hábito"
@@ -145,6 +148,7 @@ export default function HomePage() {
                   {selectDay.map((day, index) => {
                      return (
                         <Day
+                           data-test="habit-day"
                            disabled={disabledForm}
                            onClick={() => {
                               event.preventDefault()
@@ -168,6 +172,7 @@ export default function HomePage() {
                <ToastContainer style={{ fontSize: '16px' }} />
                <ContainerButtons>
                   <InputCancel
+                     data-test="habit-create-cancel-btn"
                      disabled={disabledForm}
                      onClick={() => {
                         event.preventDefault()
@@ -176,7 +181,7 @@ export default function HomePage() {
                   >
                      Cancelar
                   </InputCancel>
-                  <InputButton disabled={disabledForm} length="secondary">
+                  <InputButton data-test="habit-create-save-btn" disabled={disabledForm} length="secondary">
                      {contentButton}
                   </InputButton>
                </ContainerButtons>
@@ -190,10 +195,11 @@ export default function HomePage() {
                <Habits>
                   {habits.map((habit) => {
                      return (
-                        <ContainerHabits key={habit.id}>
+                        <ContainerHabits data-test="habit-container" key={habit.id}>
                            <section>
-                              <p>{habit.name}</p>
+                              <p data-test="habit-name">{habit.name}</p>
                               <img
+                                 data-test="habit-delete-btn"
                                  onClick={() => {
                                     if (confirm('Deseja apaga este hábito?')) {
                                        deleteHabit(habit.id, user.token).then(() => {
@@ -214,6 +220,7 @@ export default function HomePage() {
                               {selectDayReset.map((day, index) => {
                                  return (
                                     <Dday
+                                       data-test="habit-day"
                                        select={
                                           habit.days.includes(index) ? 'selected' : 'deselected'
                                        }
@@ -231,10 +238,12 @@ export default function HomePage() {
             )}
          </Container>
 
-         <Footer>
-            <span>Hábitos</span>
+         <Footer data-test="menu">
+            
+            <span data-test="habit-link"> Hábitos</span>
 
             <CircularProgressbar
+               data-test="today-link"
                className="progressbar"
                value="66"
                text="Hoje"
@@ -247,7 +256,7 @@ export default function HomePage() {
                   trailColor: 'transparent'
                })}
             />
-            <span>Histórico</span>
+            <span data-test="history-link">Histórico</span>
          </Footer>
       </ContainerApp>
    )

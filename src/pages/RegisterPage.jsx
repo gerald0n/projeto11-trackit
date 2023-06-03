@@ -60,6 +60,7 @@ export default function RegisterPage() {
             <FormLogin onSubmit={signUpForm}>
                <ToastContainer style={{ fontSize: '16px' }} />
                <Input
+                  data-test="email-input"
                   type="email"
                   placeholder="email"
                   disabled={disabledForm}
@@ -70,6 +71,7 @@ export default function RegisterPage() {
                   required
                />
                <Input
+                  data-test="password-input"
                   type="password"
                   placeholder="senha"
                   disabled={disabledForm}
@@ -80,6 +82,7 @@ export default function RegisterPage() {
                   required
                />
                <Input
+                  data-test="user-name-input"
                   type="text"
                   placeholder="nome"
                   disabled={disabledForm}
@@ -90,6 +93,7 @@ export default function RegisterPage() {
                   required
                />
                <Input
+                  data-test="user-image-input"
                   type="url"
                   placeholder="foto"
                   disabled={disabledForm}
@@ -99,11 +103,11 @@ export default function RegisterPage() {
                   }}
                   required
                />
-               <InputButton type="submit" disabled={disabledForm} required>
+               <InputButton data-test="signup-btn" type="submit" disabled={disabledForm} required>
                   {contentButton}
                </InputButton>
             </FormLogin>
-            <RegisterLink disabled={disabledForm} onClick={() => navigate('/')}>
+            <RegisterLink data-test="login-link" disabled={disabledForm} onClick={() => navigate('/')}>
                Já tem uma conta? Faça login!
             </RegisterLink>
          </Container>

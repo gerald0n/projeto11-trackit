@@ -9,7 +9,6 @@ export const ContainerApp = styled.div`
       line-height: 22px;
       padding-top: 0.8rem;
       color: #666666;
-      padding-inline: 1.7rem;
    }
 `
 
@@ -123,6 +122,7 @@ export const CollapseForm = styled.form`
    background: #ffffff;
    border-radius: 5px;
 
+   
    display: flex;
    flex-direction: column;
    justify-content: space-between;

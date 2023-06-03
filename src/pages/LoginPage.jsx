@@ -71,6 +71,7 @@ export default function Login() {
             <FormLogin onSubmit={login}>
                <ToastContainer style={{ fontSize: '16px' }} />
                <Input
+                  data-test="email-input"
                   type="email"
                   placeholder="email"
                   disabled={disabledForm}
@@ -79,6 +80,7 @@ export default function Login() {
                   required
                />
                <Input
+               data-test="password-input"
                   type="password"
                   placeholder="senha"
                   disabled={disabledForm}
@@ -86,11 +88,11 @@ export default function Login() {
                   onChange={(e) => setUser({ ...user, password: e.target.value })}
                   required
                />
-               <InputButton type="submit" disabled={disabledForm} required>
+               <InputButton data-test="login-btn" type="submit" disabled={disabledForm} required>
                   {contentButton}
                </InputButton>
             </FormLogin>
-            <RegisterLink onClick={() => navigate('/cadastro')}>
+            <RegisterLink data-test="signup-link" onClick={() => navigate('/cadastro')}>
                Não tem uma conta? Cadastre-se
             </RegisterLink>
          </Container>

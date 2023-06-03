@@ -49,7 +49,7 @@ function App() {
             <Routes location={useLocation()} key={useLocation().pathname}>
                <Route path="/" element={<LoginPage />} />
                <Route path="/cadastro" element={<RegisterPage />} />
-               <Route path="/habitos" element={<HomePage />} />
+               <Route path="/hoje" element={<HomePage />} />
             </Routes>
          </AppContext.Provider>
       </AnimatePresence>

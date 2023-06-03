@@ -42,7 +42,7 @@ export default function RegisterPage() {
          }, 2500)
       })
       data.catch((error) => {
-         errorNotification(error.response.data.message)
+         alert(error.response.data.message)
          setDisabledForm(false)
          setContentButton('Cadastrar')
       })

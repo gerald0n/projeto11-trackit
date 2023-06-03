@@ -33,7 +33,7 @@ export default function Login() {
             setContentButton(animationForm)
             setDisabledForm(true)
             successNotification(`Seja bem-vindo, ${local.name}!`)
-            setTimeout(() => navigate('/habitos'), 1000)
+            setTimeout(() => navigate('/hoje'), 1000)
          })
       }
    }, [])
@@ -50,10 +50,10 @@ export default function Login() {
          .then((response) => {
             setUser(response.data)
             localStorage.setItem('user', JSON.stringify(response.data))
-            navigate('/habitos')
+            navigate('/hoje')
          })
          .catch((error) => {
-            errorNotification(error.response.data.message)
+            alert(error.response.data.message)
             setDisabledForm(false)
             setContentButton('Cadastrar')
          })

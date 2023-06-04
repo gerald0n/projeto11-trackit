@@ -5,6 +5,7 @@ import axios from 'axios'
 const REGISTER = 'auth/sign-up'
 const LOGIN = 'auth/login'
 const HABIT = 'habits'
+const HABITS_TODAY = 'habits/today'
 const DEFAULT_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/`
 
 export const signUp = (user) => {
@@ -26,7 +27,7 @@ export const postHabit = (obj, token) => {
    return data
 }
 
-export const getHabit = (token) => {
+export const getHabit = token => {
    const data = axios.get(DEFAULT_URL.concat(HABIT), {headers: {'Authorization': `Bearer ${token}`}})
 
    return data
@@ -38,5 +39,10 @@ export const deleteHabit = (id, token) => {
    return data
 }
 
+export const getHabitsToday = token => {
+   const data = axios.get(DEFAULT_URL.concat(HABITS_TODAY), {headers: {'Authorization': `Bearer ${token}`}})
+
+   return data
+}
 /* export const movies = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
 .then(response => response.data) */

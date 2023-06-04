@@ -3,13 +3,6 @@ import styled, { css } from 'styled-components'
 export const ContainerApp = styled.div`
    height: 100vh;
    background: #f2f2f2;
-
-   p {
-      font-size: 1.8rem;
-      line-height: 22px;
-      padding-top: 0.8rem;
-      color: #666666;
-   }
 `
 
 export const Footer = styled.footer`
@@ -48,25 +41,14 @@ export const Header = styled.div`
    color: #126ba5;
 
    display: flex;
-   align-items: center;
-   justify-content: space-between;
-
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 0.5rem;
    margin-bottom: 2rem;
 
-   button {
-      width: 40px;
-      height: 35px;
-      border: none;
-      background: #52b6ff;
-      border-radius: 4.63636px;
-
-      font-family: 'Lexend Deca';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 2.6rem;
-      text-align: center;
-
-      color: #ffffff;
+   p {
+      color: #bababa;
+      font-size: 1.7rem;
    }
 `
 
@@ -122,7 +104,6 @@ export const CollapseForm = styled.form`
    background: #ffffff;
    border-radius: 5px;
 
-   
    display: flex;
    flex-direction: column;
    justify-content: space-between;
@@ -132,9 +113,6 @@ export const ContainerButtons = styled.div`
    justify-content: end;
    align-items: center;
    gap: 2.3rem;
-
-
-   
 `
 
 export const ContainerDays = styled.div`
@@ -182,32 +160,66 @@ export const InputCancel = styled.button`
 `
 export const ContainerHabits = styled.div`
    background: #ffffff;
-   height: 9.1rem;
+   height: 9.4rem;
    border-radius: 5px;
    padding-inline: 2rem;
    margin-bottom: 1rem;
 
    display: flex;
-   flex-direction: column;
-   justify-content: space-evenly;
+   justify-content: space-between;
+   align-items: center;
 
    section {
+      height: 100%;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: space-around;
+      color: #666666;
+      padding-block: 1rem;
+
+      h2 {
+         font-size: 2rem;
+      }
+
       p {
-         padding: 0;
+         font-size: 1.3rem;
+         line-height: 1.6rem;
       }
-      img {
-         width: 1.3rem;
-         height: 1.5rem;
-      }
+   }
+`
+
+export const CurrentSequence = styled.span``
+export const HighestSequence = styled.span``
+
+export const BoxCheck = styled.div`
+   width: 6.9rem;
+   height: 6.9rem;
+
+   ${({ check }) => {
+      return check
+         ? css`
+              background: #8fc549;
+           `
+         : css`
+              background: #ebebeb;
+              border: 1px solid #e7e7e7;
+           `
+   }}
+
+   border-radius: 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   img {
+      width: 3.5rem;
+      height: 2.8rem;
    }
 `
 export const Dday = styled.div`
    width: 30px;
    height: 30px;
-  
+
    ${({ select }) => {
       return select === 'selected'
          ? css`
@@ -233,6 +245,6 @@ export const ContainerDday = styled.div`
    display: flex;
    gap: 0.4rem;
 `
-export const Habits = styled.div`
-padding-bottom: 10rem;
+export const HabitsContainer = styled.div`
+   padding-bottom: 10rem;
 `

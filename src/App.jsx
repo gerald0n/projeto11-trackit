@@ -1,7 +1,8 @@
 import LoginPage from './pages/LoginPage'
-import HomePage from './pages/HomePage/HomePage'
+import Today from './pages/Today/Today'
+import Habits from './pages/Habits/Habits'
 import RegisterPage from './pages/RegisterPage'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useState, createContext } from 'react'
 import { ThreeDots } from 'react-loader-spinner'
 import logo from './assets/Group 37.png'
@@ -28,9 +29,10 @@ function App() {
    const [user, setUser] = useState({
       email: '',
       name: '',
-      image: '', 
+      image: '',
       password: ''
    })
+   const [habits, setHabits] = useState([])
 
    return (
       <AnimatePresence>
@@ -43,13 +45,16 @@ function App() {
                setDisabledForm,
                logo,
                user,
-               setUser
+               setUser,
+               habits,
+               setHabits
             }}
          >
             <Routes location={useLocation()} key={useLocation().pathname}>
                <Route path="/" element={<LoginPage />} />
                <Route path="/cadastro" element={<RegisterPage />} />
-               <Route path="/hoje" element={<HomePage />} />
+               <Route path="/habitos" element={<Habits />} />
+               <Route path="/hoje" element={<Today />} />
             </Routes>
          </AppContext.Provider>
       </AnimatePresence>

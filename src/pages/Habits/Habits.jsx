@@ -16,8 +16,8 @@ import {
    ContainerHabits,
    Dday,
    ContainerDday,
-   Habits
-} from './HomePage.style'
+   HabitsBox
+} from './Habits.style'
 import { Input } from '../../styles/Form.style'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
@@ -25,8 +25,9 @@ import { AppContext } from '../../App'
 import { alertNotification } from '../../services/notifications'
 import { postHabit, getHabit, deleteHabit } from '../../services/api'
 import lixeira from '../../assets/lixeira.png'
+import { useNavigate } from 'react-router-dom'
 
-export default function HomePage() {
+export default function Habits() {
    const selectDayReset = [
       { value: 'D', isSelected: false },
       { value: 'S', isSelected: false },
@@ -37,7 +38,8 @@ export default function HomePage() {
       { value: 'S', isSelected: false }
    ]
 
-   const [habits, setHabits] = useState([])
+   const navigate = useNavigate()
+
    const {
       animationForm,
       contentButton,
@@ -45,7 +47,9 @@ export default function HomePage() {
       disabledForm,
       setDisabledForm,
       user,
-      setUser
+      setUser,
+      habits,
+      setHabits
    } = useContext(AppContext)
 
    const [selectDay, setSelectDay] = useState(selectDayReset)
@@ -68,7 +72,11 @@ export default function HomePage() {
                setHabits(response.data)
             })
             .catch((error) => console.log(error.response))
+
+         return
       }
+
+      navigate('/')
    }, [])
 
    useEffect(() => {
@@ -101,7 +109,12 @@ export default function HomePage() {
          <Container>
             <Header>
                Meus hábitos
-               <button data-test="habit-create-btn" onClick={() => setCollapseVisible(!collapseVisible)}>+</button>
+               <button
+                  data-test="habit-create-btn"
+                  onClick={() => setCollapseVisible(!collapseVisible)}
+               >
+                  +
+               </button>
             </Header>
 
             <CollapseForm
@@ -181,7 +194,11 @@ export default function HomePage() {
                   >
                      Cancelar
                   </InputCancel>
-                  <InputButton data-test="habit-create-save-btn" disabled={disabledForm} length="secondary">
+                  <InputButton
+                     data-test="habit-create-save-btn"
+                     disabled={disabledForm}
+                     length="secondary"
+                  >
                      {contentButton}
                   </InputButton>
                </ContainerButtons>
@@ -192,7 +209,7 @@ export default function HomePage() {
                   trackear!
                </p>
             ) : (
-               <Habits>
+               <HabitsBox>
                   {habits.map((habit) => {
                      return (
                         <ContainerHabits data-test="habit-container" key={habit.id}>
@@ -234,12 +251,11 @@ export default function HomePage() {
                         </ContainerHabits>
                      )
                   })}
-               </Habits>
+               </HabitsBox>
             )}
          </Container>
 
          <Footer data-test="menu">
-            
             <span data-test="habit-link"> Hábitos</span>
 
             <CircularProgressbar

@@ -1,12 +1,19 @@
-import { Container, Image, FormLogin, Input, InputButton, RegisterLink } from '../styles/Form.style'
-import logo from './../assets/Group 37.png'
+import {
+   Container,
+   Image,
+   FormLogin,
+   Input,
+   InputButton,
+   RegisterLink
+} from '../../styles/Form.style'
+import logo from './../../assets/Group 37.png'
 import { useContext, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { AppContext } from './../App'
+import { AppContext } from '../../App'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { signUp } from '../services/api'
-import { errorNotification, successNotification } from '../services/notifications'
+import { signUp } from '../../services/api'
+import { errorNotification, successNotification } from '../../services/notifications'
 
 export default function RegisterPage() {
    const {
@@ -107,7 +114,11 @@ export default function RegisterPage() {
                   {contentButton}
                </InputButton>
             </FormLogin>
-            <RegisterLink data-test="login-link" disabled={disabledForm} onClick={() => navigate('/')}>
+            <RegisterLink
+               data-test="login-link"
+               disabled={disabledForm}
+               onClick={() => navigate('/')}
+            >
                Já tem uma conta? Faça login!
             </RegisterLink>
          </Container>

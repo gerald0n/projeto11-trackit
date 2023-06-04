@@ -1,11 +1,18 @@
-import { Container, Image, FormLogin, Input, InputButton, RegisterLink } from '../styles/Form.style'
+import {
+   Container,
+   Image,
+   FormLogin,
+   Input,
+   InputButton,
+   RegisterLink
+} from '../../styles/Form.style'
 import { useContext, useEffect } from 'react'
-import App, { AppContext } from './../App'
+import App, { AppContext } from '../../App'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { motion } from 'framer-motion'
-import { signIn } from '../services/api'
-import { errorNotification, successNotification } from '../services/notifications'
+import { signIn } from '../../services/api'
+import { errorNotification, successNotification } from '../../services/notifications'
 
 export default function Login() {
    const {
@@ -80,7 +87,7 @@ export default function Login() {
                   required
                />
                <Input
-               data-test="password-input"
+                  data-test="password-input"
                   type="password"
                   placeholder="senha"
                   disabled={disabledForm}

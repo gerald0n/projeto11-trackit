@@ -1,18 +1,17 @@
 import { useContext, useEffect, useState } from 'react'
+import Navbar from '../../components/Navbar/Navbar'
+import Footer from '../../components/Footer/Footer'
+
 import {
    ContainerApp,
-   Navbar,
-   ImageProfile,
    Container,
-   Footer,
    Header,
    ContainerHabits,
    BoxCheck,
    CurrentSequence,
    HighestSequence
 } from './Today.style'
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import 'react-circular-progressbar/dist/styles.css'
+
 import { AppContext } from '../../App.jsx'
 
 import dayjs from 'dayjs'
@@ -39,7 +38,6 @@ export default function Today() {
    const dayAndMonth = dayjs().format('DD/MM')
 
    const [habitsToday, setHabitsToday] = useState([])
-   const [currentPage, setCurrentPage] = useState('today')
 
    useEffect(() => {
       if (localStorage.length > 0) {
@@ -59,16 +57,8 @@ export default function Today() {
 
    return (
       <ContainerApp>
-         <Navbar data-test="header">
-            <span>TrackIt</span>
-            <ImageProfile
-               data-test="avatar"
-               onClick={() => {
-                  window.location.reload()
-               }}
-               src={user.image}
-            />
-         </Navbar>
+         
+         <Navbar userImage={user.image} />
 
          <Container>
             <Header>
@@ -99,25 +89,7 @@ export default function Today() {
             })}
          </Container>
 
-         <Footer data-test="menu">
-            <span data-test="habit-link"> Hábitos</span>
-
-            <CircularProgressbar
-               data-test="today-link"
-               className="progressbar"
-               value="0"
-               text="Hoje"
-               background
-               backgroundPadding={6}
-               styles={buildStyles({
-                  backgroundColor: '#52B6FF',
-                  textColor: '#fff',
-                  pathColor: '#fff',
-                  trailColor: 'transparent'
-               })}
-            />
-            <span data-test="history-link">Histórico</span>
-         </Footer>
+         <Footer />
       </ContainerApp>
    )
 }

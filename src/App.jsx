@@ -1,7 +1,7 @@
-import LoginPage from './pages/LoginPage'
-import Today from './pages/Today/Today'
-import Habits from './pages/Habits/Habits'
-import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/Login/LoginPage'
+import Today from './pages/Today/TodayPage'
+import Habits from './pages/Habits/HabitsPage'
+import RegisterPage from './pages/Register/RegisterPage'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useState, createContext } from 'react'
 import { ThreeDots } from 'react-loader-spinner'
@@ -33,7 +33,7 @@ function App() {
       password: ''
    })
    const [habits, setHabits] = useState([])
-
+   
    return (
       <AnimatePresence>
          <AppContext.Provider

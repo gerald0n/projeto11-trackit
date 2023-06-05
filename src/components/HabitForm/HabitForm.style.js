@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-export const CollapseForm = styled.form`
+export const CollapseForm = styled.div`
    ${({ collapse }) => {
       return collapse
          ? css`

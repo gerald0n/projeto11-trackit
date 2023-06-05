@@ -36,6 +36,39 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
       })
    }
 
+   const handleSubmit = () => {
+      if (post.days.length === 0) {
+         alertNotification('Selecione, no mínimo, 01 dia.')
+
+         return
+      }
+
+      if (post.name.length === 0) {
+         alert('Digite o nome do hábito.')
+
+         return
+      }
+
+      postHabit(post, user.token)
+         .then(() => {
+            setPost({ name: '', days: [] })
+            setSelectDay(selectDayReset)
+            setCollapseVisible(!collapseVisible)
+            /*  */
+            getHabit(user.token)
+               .then((response) => {
+                  setHabits(response.data)
+                  setContentButton('Salvar')
+                  setDisabledForm(false)
+               })
+               .catch((error) => alert(error.response))
+         })
+         .catch((error) => alert(error.response))
+
+      setContentButton(animationForm)
+      setDisabledForm(true)
+   }
+
    return (
       <>
          <Header>
@@ -94,38 +127,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                   data-test="habit-create-save-btn"
                   disabled={disabledForm}
                   length="secondary"
-                  onClick={() => {
-                     if (post.days.length === 0) {
-                        alertNotification('Selecione, no mínimo, 01 dia.')
-               
-                        return
-                     }
-               
-                     if (post.name.length === 0) {
-                        alert('Digite o nome do hábito.')
-                        
-                        return
-                     }
-               
-                     postHabit(post, user.token)
-                        .then(() => {
-                           setPost({ name: '', days: [] })
-                           setSelectDay(selectDayReset)
-                           setCollapseVisible(!collapseVisible)
-                           /*  */
-                           getHabit(user.token)
-                              .then((response) => {
-                                 setHabits(response.data)
-                                 setContentButton('Salvar')
-                                 setDisabledForm(false)
-                              })
-                              .catch((error) => alert(error.response))
-                        })
-                        .catch((error) => alert(error.response))
-               
-                     setContentButton(animationForm)
-                     setDisabledForm(true)
-                  }}
+                  onClick={handleSubmit}
                >
                   {contentButton}
                </InputButton>

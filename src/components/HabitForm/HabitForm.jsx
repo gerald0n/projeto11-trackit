@@ -48,8 +48,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
          alert('Digite o nome do hábito.')
          return
       }
-
-
+   
       setContentButton(animationForm)
       setDisabledForm(true)
 
@@ -85,7 +84,6 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
          <CollapseForm
             data-test="habit-create-container"
             collapse={collapseVisible}
-            onSubmit={handleSubmit}
          >
             <Input
 
@@ -131,6 +129,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                   data-test="habit-create-save-btn"
                   disabled={disabledForm}
                   length="secondary"
+                  onClick={handleSubmit}
                >
                   {contentButton}
                </InputButton>

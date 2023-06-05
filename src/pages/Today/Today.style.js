@@ -170,7 +170,7 @@ export const ContainerHabits = styled.div`
    align-items: center;
 
    section {
-      width: 20rem;
+      width: calc(100% - 12rem);
       height: 100%;
       word-break: break-all;
       display: flex;

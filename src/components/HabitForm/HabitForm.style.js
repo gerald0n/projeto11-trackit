@@ -100,5 +100,10 @@ export const Header = styled.div`
       text-align: center;
 
       color: #ffffff;
+
+      &:disabled {
+         background-color: #4f84a7;
+         color: #ddddcd;
+      }
    }
 `

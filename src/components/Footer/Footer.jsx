@@ -41,9 +41,8 @@ export default function Footer() {
          <span data-test="habit-link" onClick={() => navigate('/habitos')}>
             Hábitos
          </span>
-         <div onClick={() => navigate('/hoje')}>
+         <div data-test="today-link" onClick={() => navigate('/hoje')}>
             <CircularProgressbar
-               data-test="today-link"
                className="progressbar"
                value={(habitsToday.length > 0 ? (progress / habitsToday.length) * 100 : 0)}
                text="Hoje"

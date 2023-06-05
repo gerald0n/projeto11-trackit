@@ -25,7 +25,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
       setHabits
    } = useContext(AppContext)
 
-   const handleDayClick = day => {
+   const handleDayClick = (day) => {
       event.preventDefault()
       day.isSelected = !day.isSelected
       const aux = [...selectDay]
@@ -37,21 +37,17 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
    }
 
    const handleSubmit = () => {
-      event.preventDefault()
       if (post.days.length === 0) {
          alertNotification('Selecione, no mínimo, 01 dia.')
 
          return
       }
 
-      if(post.name.length === 0) {
+      if (post.name.length === 0) {
          alert('Digite o nome do hábito.')
+
          return
       }
-
-
-      setContentButton(animationForm)
-      setDisabledForm(true)
 
       postHabit(post, user.token)
          .then(() => {
@@ -68,6 +64,9 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                .catch((error) => alert(error.response))
          })
          .catch((error) => alert(error.response))
+
+      setContentButton(animationForm)
+      setDisabledForm(true)
    }
 
    return (
@@ -82,13 +81,8 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                +
             </button>
          </Header>
-         <CollapseForm
-            data-test="habit-create-container"
-            collapse={collapseVisible}
-            onSubmit={handleSubmit}
-         >
+         <CollapseForm data-test="habit-create-container" collapse={collapseVisible}>
             <Input
-
                data-test="habit-name-input"
                type="text"
                context="homepage"
@@ -105,7 +99,9 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                      <Day
                         data-test="habit-day"
                         disabled={disabledForm}
-                        onClick={() => {handleDayClick(day, index)}}
+                        onClick={() => {
+                           handleDayClick(day, index)
+                        }}
                         key={index}
                         select={day.isSelected}
                      >
@@ -131,6 +127,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
                   data-test="habit-create-save-btn"
                   disabled={disabledForm}
                   length="secondary"
+                  onClick={handleSubmit}
                >
                   {contentButton}
                </InputButton>

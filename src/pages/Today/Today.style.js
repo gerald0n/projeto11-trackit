@@ -32,7 +32,7 @@ export const Footer = styled.footer`
 `
 
 export const Container = styled.div`
-   padding-top: 9.2rem;
+   padding-block: 9.2rem;
    padding-inline: 1.7rem;
 `
 

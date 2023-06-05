@@ -25,7 +25,7 @@ export default function HabitForm({ post, selectDay, setSelectDay, setPost, sele
       setHabits
    } = useContext(AppContext)
 
-   const handleDayClick = (day, index) => {
+   const handleDayClick = day => {
       event.preventDefault()
       day.isSelected = !day.isSelected
       const aux = [...selectDay]

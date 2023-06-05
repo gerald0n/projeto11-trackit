@@ -1,3 +1,4 @@
+import Historic from './pages/Historic/HistoricPage'
 import LoginPage from './pages/Login/LoginPage'
 import Today from './pages/Today/TodayPage'
 import Habits from './pages/Habits/HabitsPage'
@@ -33,6 +34,8 @@ function App() {
       password: ''
    })
    const [habits, setHabits] = useState([])
+   const [progress, setProgress] = useState(0)
+   const [habitsToday, setHabitsToday] = useState([])
    
    return (
       <AnimatePresence>
@@ -47,7 +50,11 @@ function App() {
                user,
                setUser,
                habits,
-               setHabits
+               setHabits,
+               progress, 
+               setProgress,
+               habitsToday,
+               setHabitsToday
             }}
          >
             <Routes location={useLocation()} key={useLocation().pathname}>
@@ -55,6 +62,7 @@ function App() {
                <Route path="/cadastro" element={<RegisterPage />} />
                <Route path="/habitos" element={<Habits />} />
                <Route path="/hoje" element={<Today />} />
+               <Route path="/historico" element={<Historic />} />
             </Routes>
          </AppContext.Provider>
       </AnimatePresence>

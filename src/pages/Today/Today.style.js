@@ -160,9 +160,9 @@ export const InputCancel = styled.button`
 `
 export const ContainerHabits = styled.div`
    background: #ffffff;
-   height: 9.4rem;
+   min-height: 9.4rem;
    border-radius: 5px;
-   padding-inline: 2rem;
+   padding: 2rem;
    margin-bottom: 1rem;
 
    display: flex;
@@ -170,12 +170,15 @@ export const ContainerHabits = styled.div`
    align-items: center;
 
    section {
+      width: 20rem;
       height: 100%;
+      word-break: break-all;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       color: #666666;
       padding-block: 1rem;
+      gap: 1rem;
 
       h2 {
          font-size: 2rem;

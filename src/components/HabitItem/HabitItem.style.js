@@ -2,19 +2,21 @@ import styled, { css } from "styled-components"
 
 export const ContainerHabits = styled.div`
    background: #ffffff;
-   height: 9.1rem;
+   min-height: 9.1rem;
    border-radius: 5px;
-   padding-inline: 2rem;
+   padding: 2rem;
    margin-bottom: 1rem;
 
    display: flex;
    flex-direction: column;
    justify-content: space-evenly;
+   gap: 1rem;
 
    section {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1rem;
       p {
          padding: 0;
       }

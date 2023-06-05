@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
 
@@ -18,70 +18,87 @@ import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import localeData from 'dayjs/plugin/localeData'
 import 'dayjs/locale/pt-br'
-import { useNavigate } from 'react-router-dom'
 import check from './../../assets/check.png'
 
-import { getHabitsToday } from '../../services/api.js'
+import { getHabitsToday, checkHabit, uncheckHabit } from '../../services/api.js'
 
 dayjs.extend(localizedFormat)
 dayjs.extend(localeData)
 
 export default function Today() {
-   const { user, setUser } = useContext(AppContext)
-   const navigate = useNavigate()
+   const { user, habitsToday, setHabitsToday, progress, setProgress } =
+      useContext(AppContext)
+
    dayjs.locale('pt-br')
+
    const fullDay = dayjs()
       .format('dddd')
       .charAt(0)
       .toUpperCase()
       .concat(dayjs().format('dddd').slice(1))
+
    const dayAndMonth = dayjs().format('DD/MM')
-
-   const [habitsToday, setHabitsToday] = useState([])
-
-   useEffect(() => {
-      if (localStorage.length > 0) {
-         let local = localStorage.getItem('user')
-         local = JSON.parse(local)
-         setUser(local)
-
-         getHabitsToday(local.token)
-            .then((response) => setHabitsToday(response.data))
-            .catch((error) => alert(error.response))
-
-         return
-      }
-
-      navigate('/')
-   }, [])
 
    return (
       <ContainerApp>
-         
          <Navbar userImage={user.image} />
 
          <Container>
             <Header>
-               <h1>{`${fullDay}, ${dayAndMonth}`}</h1>
-               <p>Nenhum hábito concluído ainda</p>
+               <h1 data-test="today">{`${fullDay}, ${dayAndMonth}`}</h1>
+               {progress === 0 ? (
+                  <p data-test="today-counter">Nenhum hábito concluído ainda</p>
+               ) : (
+                  <p data-test="today-counter" style={{ color: '#8FC549' }}>{`${
+                     ((progress / habitsToday.length) * 100).toFixed()
+                  }% dos hábitos concluídos`}</p>
+               )}
             </Header>
             {habitsToday.map((habit) => {
                return (
-                  <ContainerHabits key={habit.id}>
+                  <ContainerHabits data-test="today-habit-container" key={habit.id}>
                      <section>
-                        <h2>{habit.name}</h2>
+                        <h2 data-test="today-habit-name">{habit.name}</h2>
                         <div>
-                           <p>
-                              Sequência atual:{' '}
-                              <CurrentSequence>{`${habit.currentSequence} dias`}</CurrentSequence>
+                           <p data-test="today-habit-sequence">
+                              Sequência atual:
+                              <CurrentSequence>{` ${habit.currentSequence} dias`}</CurrentSequence>
                            </p>
-                           <p>
-                              Seu recorde:{' '}
-                              <HighestSequence>{`${habit.highestSequence} dias`}</HighestSequence>
+                           <p data-test="today-habit-record">
+                              Seu recorde:
+                              <HighestSequence>{` ${habit.highestSequence} dias`}</HighestSequence>
                            </p>
                         </div>
                      </section>
-                     <BoxCheck check={habit.done}>
+                     <BoxCheck
+                        data-test="today-habit-check-btn"
+                        check={habit.done}
+                        onClick={() => {
+                           if (!habit.done) {
+                              checkHabit(habit.id, user.token)
+                                 .then(() => {
+                                    getHabitsToday(user.token)
+                                       .then((response) => {
+                                          setHabitsToday(response.data)
+                                          setProgress(progress + 1)
+                                       })
+                                       .catch((error) => alert(error.response.data))
+                                 })
+                                 .catch((error) => console.log(error.response.data))
+                           } else {
+                              uncheckHabit(habit.id, user.token)
+                                 .then(() => {
+                                    getHabitsToday(user.token)
+                                       .then((response) => {
+                                          setHabitsToday(response.data)
+                                          setProgress(progress - 1)
+                                       })
+                                       .catch((error) => alert(error.response.data))
+                                 })
+                                 .catch((error) => alert(error.response.data))
+                           }
+                        }}
+                     >
                         <img src={check} />
                      </BoxCheck>
                   </ContainerHabits>

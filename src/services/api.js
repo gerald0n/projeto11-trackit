@@ -44,5 +44,18 @@ export const getHabitsToday = token => {
 
    return data
 }
+
+export const checkHabit = (id, token) => {
+   const data = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, {headers: {'Authorization': `Bearer ${token}`}})
+
+   return data
+}
+
+export const uncheckHabit = (id, token) => {
+   const data = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, {headers: {'Authorization': `Bearer ${token}`}})
+
+   return data
+}
+
 /* export const movies = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
 .then(response => response.data) */

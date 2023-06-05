@@ -8,7 +8,7 @@ export default function Navbar({userImage}) {
          <span>TrackIt</span>
          <ImageProfile
             data-test="avatar"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/hoje')}
             src={userImage}
          />
       </ContainerNavbar>

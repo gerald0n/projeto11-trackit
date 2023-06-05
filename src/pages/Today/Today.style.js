@@ -191,8 +191,29 @@ export const ContainerHabits = styled.div`
    }
 `
 
-export const CurrentSequence = styled.span``
-export const HighestSequence = styled.span``
+export const CurrentSequence = styled.span`
+   ${(props) => {
+      return props.status
+         ? css`
+              color: #8fc549;
+           `
+         : css`
+              color: #666666;
+           `
+   }}
+`
+
+export const HighestSequence = styled.span`
+   ${(props) => {
+      return props.current > 0 && props.current === props.highest
+         ? css`
+              color: #8fc549;
+           `
+         : css`
+            color: #666666;
+         `
+   }}
+`
 
 export const BoxCheck = styled.div`
    width: 6.9rem;

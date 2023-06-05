@@ -62,11 +62,11 @@ export default function Today() {
                         <div>
                            <p data-test="today-habit-sequence">
                               Sequência atual:
-                              <CurrentSequence>{` ${habit.currentSequence} dias`}</CurrentSequence>
+                              <CurrentSequence status={habit.done}>{` ${habit.currentSequence} dias`}</CurrentSequence>
                            </p>
                            <p data-test="today-habit-record">
                               Seu recorde:
-                              <HighestSequence>{` ${habit.highestSequence} dias`}</HighestSequence>
+                              <HighestSequence current={habit.currentSequence} highest={habit.highestSequence}>{` ${habit.highestSequence} dias`}</HighestSequence>
                            </p>
                         </div>
                      </section>
